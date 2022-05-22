@@ -30,20 +30,15 @@ public class Voiture_dao implements Class_dao {
 			
 			ResultSet L = listeVoiture;
 			while(L.next()) {
-				System.out.println(L.getInt("idVoiture"));
-
 				Location_dao location = new Location_dao();
 				
 				ResultSet VoitL = location.find(L.getInt("idVoiture"));
 				
 				while(VoitL.next()) {
-					System.out.println(VoitL.getString("idLocation"));
 					LocalDate dateLoc = LocalDate.parse(VoitL.getString("date_locat"));
-					System.out.println(dateLoc);
 					LocalDate endLoc = LocalDate.parse(VoitL.getString("date_locat")).plusDays(VoitL.getInt("duree_prev"));
-					System.out.println(endLoc);
 					LocalDate now = java.time.LocalDate.now();
-					System.out.println(now);
+					
 					if (now.isAfter(dateLoc) && now.isAfter(endLoc)) {
 						this.updateD(L.getInt("idVoiture"), "oui");
 					}
